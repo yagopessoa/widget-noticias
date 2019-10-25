@@ -27,6 +27,7 @@ export const Text = styled.div`
 export const Card = styled.div`
   background: #FFFFFF;
   border: 1px solid #E6E6E6;
+  margin: 48px 0px;
   padding: 55px 70px;
   width: 50%;
   display: flex;

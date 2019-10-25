@@ -1,7 +1,11 @@
 import React from 'react';
 import './App.css';
-
-import { Title, Subtitle, Text, Button, Label, Card, Divider, Row } from './Components/baseComponents';
+import { Select } from './Components/select';
+import { 
+  Title, Subtitle, Text,
+  Button, Label, Card,
+  Divider, Row 
+} from './Components/baseComponents';
 
 const news = [
   {
@@ -19,7 +23,7 @@ const news = [
   {
     'name': 'Manchete 3',
     'date': '01/01/2019',
-    'font': 'Fonte C',
+    'font': 'Fonte A',
     'link': '#'
   },
   {
@@ -39,8 +43,10 @@ const news = [
 function App() {
 
   const renderList = () => {
-    return news.map(newsItem => <div>
-      <Subtitle>{ newsItem.name }</Subtitle>
+    return news.map((newsItem, index) => <div key={index}>
+      <a href={newsItem.link} style={{textDecoration: 'none'}}>
+        <Subtitle>{ newsItem.name }</Subtitle>
+      </a>
   
       <Row>
         <Text>{ newsItem.date }</Text>
@@ -62,7 +68,16 @@ function App() {
             style={{ marginBottom: 48 }}
           >
             <Title>Notícias</Title>
-            <Text>Filtrar por fonte</Text>
+
+            <Select name="fontFilter">
+              <option value="">Filtrar por fonte</option>
+              {[...new Set(news.map(item => item.font))]
+                  .map((font, index) => 
+                    <option key={index} value="">
+                      { font }
+                    </option>)
+              }
+            </Select>
           </Row>
 
           { renderList() }
