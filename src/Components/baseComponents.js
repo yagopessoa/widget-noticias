@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-const Title = styled.p`
+export const Title = styled.p`
   font: 600 32px/38px Roboto;
   color: #009DFF;
   padding: 8px 2px;
@@ -10,30 +10,30 @@ const Title = styled.p`
   margin: 8px 2px;
 `
 
-const Subtitle = styled.div`
+export const Subtitle = styled.div`
   font: 600 24px/29px Roboto;
   color: #4E4E4E;
   width: fit-content;
   margin: 16px 2px;
 `
 
-const Text = styled.div`
+export const Text = styled.div`
   font: 400 20px/24px Roboto;
   color: #A4A4A4;
   width: fit-content;
   margin: 8px 2px;
 `
 
-const Card = styled.div`
+export const Card = styled.div`
   background: #FFFFFF;
   border: 1px solid #E6E6E6;
   padding: 55px 70px;
-  width: 80%;
+  width: 50%;
   display: flex;
   flex-direction: column;
 `
 
-const Button = styled.button`
+export const Button = styled.button`
   padding: 8px 16px;
   width: fit-content;
   margin: 8px 2px;
@@ -52,16 +52,17 @@ const Button = styled.button`
   }
 `
 
-const Label = styled.div`
-  padding: 2px 38px;
-  margin: 8px 2px;
+export const Label = styled.div`
+  font: 400 20px/24px Roboto;
+  padding: 0px 38px;
+  margin: 0px 16px;
   background: #D8D8E4;
   border-radius: 4px;
   color: #FFF;
   width: fit-content;
 `
 
-const Divider = styled.div`
+export const Divider = styled.div`
   height: 0px;
   width: 100%;
   background: #D8D8D8;
@@ -70,4 +71,14 @@ const Divider = styled.div`
   margin: 16px 0px;
 `
 
-export { Button, Title, Subtitle, Text, Label, Card, Divider };
+export const Row = styled.div`
+  display: flex;
+  align-items: center;
+
+  ${props =>
+    props.fluid &&
+    css`
+      width: 100%;
+      justify-content: space-between;
+    `};
+`
