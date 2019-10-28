@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-export const Select = styled.select`
+const Select = styled.select`
   font: 400 20px/24px Roboto;
   color: #A4A4A4;
   width: fit-content;
@@ -30,3 +30,5 @@ export const Select = styled.select`
       `};
   }
 `
+
+export default Select

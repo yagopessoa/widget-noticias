@@ -1,7 +1,7 @@
 import React from 'react'
 import '../App.css'
 
-import { Select } from '../Components/select'
+import Select from '../Components/select'
 import { 
   Title, Subtitle, Text,
   Button, Label, Card,
@@ -14,6 +14,7 @@ import { fetchNews } from '../Redux/actions'
 class Home extends React.Component {
 
   state = {
+    selected: '',
     news: [],
     hasMoreToFetch: false,
     loading: true
@@ -37,24 +38,37 @@ class Home extends React.Component {
 
   }
 
-  renderList = (news) => news.map((newsItem, index) => 
-    <div key={index}>
-      <a href={newsItem.link} target='_blank' style={{textDecoration: 'none'}}>
-        <Subtitle>{ newsItem.title }</Subtitle>
-      </a>
-  
-      <Row>
-        <Text>{ newsItem.date }</Text>
-        <Label>{ newsItem.font }</Label>
-      </Row>
-  
-      <Divider />
-    </div>
-  )
+  renderList = (news, selected) => {
+    
+    let newsList
+    
+    if (selected === '') newsList = news
+    else newsList = news.filter(item => item.source === selected)
+
+    console.log(newsList)
+    
+    return newsList.map((newsItem, index) => 
+      <div key={index}>
+        <a href={newsItem.link} target='_blank' style={{textDecoration: 'none'}}>
+          <Subtitle>{ newsItem.title }</Subtitle>
+        </a>
+    
+        <Row>
+          <Text>{ newsItem.date }</Text>
+          <Label>{ newsItem.source }</Label>
+        </Row>
+    
+        <Divider />
+      </div>)
+  }
+
+  sourcesList = (news) => [...new Set(news.map(item => item.source))]
+
+  handleFilterOption = (e) => { if (e.detail === 0) this.setState({ selected: e.target.value }) }
 
   render () {
 
-    const { news, hasMoreToFetch, loading } = this.state
+    const { selected, news, hasMoreToFetch, loading } = this.state
 
     return (
       <div>
@@ -68,19 +82,18 @@ class Home extends React.Component {
             >
               <Title>Notícias</Title>
   
-              <Select name='fontFilter'>
+              <Select name='sourceFilter' onClick={this.handleFilterOption}>
                 <option value=''>Filtrar por fonte</option>
-                {[...new Set(news.map(item => item.font))]
-                    .map((font, index) => 
-                      <option key={index} value=''>
-                        { font }
-                      </option>)
+                {this.sourcesList(news).map((source, index) => 
+                  <option key={index} value={source}>
+                    { source }
+                  </option>)
                 }
               </Select>
             </Row>
   
             { 
-              news.length > 0 ? this.renderList(news) :
+              news.length > 0 ? this.renderList(news, selected) :
 
               <Row><Text style={{width: '100%', textAlign: 'center'}}>
                 {loading ? 'Carregando...' : 'Não existem notícias para serem exibidas.'}

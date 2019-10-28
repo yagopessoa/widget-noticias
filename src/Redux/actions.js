@@ -14,7 +14,7 @@ function receiveNews (json) {
   return {
     type: RECEIVE_NEWS,
     news: json.articles && json.articles.map(article => ({
-      'font': article.source.name,
+      'source': article.source.name,
       'title': article.title,
       'link': article.url,
       'date': formattedDate(new Date(article.publishedAt))
