@@ -1,8 +1,14 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# News Widget
+
+A simple web app that fetches daily news, using the [News API](http://newsapi.org). This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
-In the project directory, you can run:
+In order to run the project properly, you need to get an API key to be able to use the [News API](http://newsapi.org). After you got one, create a `.env` file in the root folder of the project and set the key into a variable, like so:
+
+### `REACT_APP_API_KEY=<YOUR_API_KEY>`
+
+After that, in the project directory, you can run:
 
 ### `npm start`
 

@@ -22,6 +22,12 @@ export const Text = styled.div`
   color: #A4A4A4;
   width: fit-content;
   margin: 8px 2px;
+
+  ${props =>
+    props.caption &&
+    css`
+      font-size: 12px;
+    `};
 `
 
 export const Card = styled.div`
