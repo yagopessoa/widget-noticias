@@ -14,12 +14,24 @@ import { fetchNews } from '../Redux/actions'
 class Home extends React.Component {
 
   state = {
-    news: []
+    news: [],
+    hasMoreToFetch: false,
+    loading: true
   }
 
   componentDidMount () {
     
-    store.subscribe(() => this.setState({ news: store.getState().items }))
+    store.subscribe(() => {
+      
+      const { items, isFetching, hasMoreToFetch} = store.getState()
+
+      this.setState({
+        news: items,
+        hasMoreToFetch: hasMoreToFetch,
+        loading: isFetching
+      })
+      
+    })
 
     store.dispatch(fetchNews())
 
@@ -27,7 +39,7 @@ class Home extends React.Component {
 
   renderList = (news) => news.map((newsItem, index) => 
     <div key={index}>
-      <a href={newsItem.link} style={{textDecoration: 'none'}}>
+      <a href={newsItem.link} target={'_blank'} style={{textDecoration: 'none'}}>
         <Subtitle>{ newsItem.title }</Subtitle>
       </a>
   
@@ -42,7 +54,7 @@ class Home extends React.Component {
 
   render () {
 
-    const { news } = this.state
+    const { news, hasMoreToFetch, loading } = this.state
 
     return (
       <div>
@@ -67,10 +79,18 @@ class Home extends React.Component {
               </Select>
             </Row>
   
-            { this.renderList(news) }
+            { 
+              news.length > 0 ? this.renderList(news) :
+              
+              <Row><Text style={{width: '100%', textAlign: 'center'}}>
+                Não existem notícias para serem exibidas.
+              </Text></Row>
+            }
   
             <Button
               style={{ marginTop: 48 }}
+              disabled={ !hasMoreToFetch || loading }
+              onClick={ () => store.dispatch(fetchNews()) }
             >
               Mostrar mais
             </Button>

@@ -2,11 +2,6 @@
 import fetch from 'cross-fetch'
 import store from './store'
 
-
-// 0ccd53f391fc447b96cc29b12934255e
-// https://newsapi.org/v2/top-headlines?country=br&pageSize=5&page=1&apiKey=0ccd53f391fc447b96cc29b12934255e
-
-
 export const REQUEST_NEWS = 'REQUEST_NEWS'
 function requestNews () {
   return {
@@ -18,7 +13,7 @@ export const RECEIVE_NEWS = 'RECEIVE_NEWS'
 function receiveNews (json) {
   return {
     type: RECEIVE_NEWS,
-    news: json.articles.map(article => ({
+    news: json.articles && json.articles.map(article => ({
       'font': article.source.name,
       'title': article.title,
       'link': article.url,
@@ -28,14 +23,14 @@ function receiveNews (json) {
 }
 
 export function fetchNews () {
-  
-  return function (dispatch) {
+
+  if (store.getState().hasMoreToFetch) return function (dispatch, state) {
     
     dispatch(requestNews())
 
-    const page = parseInt(store.getState().items.legth/5) + 1
+    let page = parseInt(state().items.length/5) + 1
 
-    return fetch(`https://newsapi.org/v2/top-headlines?country=br&pageSize=5&page=${page}&apiKey=0ccd53f391fc447b96cc29b12934255e`)
+    return fetch(`https://newsapi.org/v2/top-headlines?country=br&pageSize=5&page=${page}&apiKey=${process.env.REACT_APP_API_KEY}`)
       .then(
         response => response.json(),
         error => console.log('An error occurred.', error)

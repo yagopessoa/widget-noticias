@@ -51,6 +51,13 @@ export const Button = styled.button`
   :active{
     background: #4FBBFF;
   }
+
+  ${props =>
+    props.disabled &&
+    css`
+      cursor: auto;
+      background-color: #D8D8E4;
+    `};
 `
 
 export const Label = styled.div`

@@ -18,16 +18,18 @@ function news (
       })
     case RECEIVE_NEWS:
 
+      let incNews = action.news ? action.news : []
+
       let news = [
         ...state.items,
-        ...action.news
+        ...incNews
       ]
 
       return Object.assign({}, state, {
         isFetching: false,
         hasMoreToFetch: 
           (news.length % 5 !== 0 ? false : true)
-          && action.news.length !== 0,
+          && incNews.length !== 0,
         items: news
       })
     default:
