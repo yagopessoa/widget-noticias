@@ -81,9 +81,9 @@ class Home extends React.Component {
   
             { 
               news.length > 0 ? this.renderList(news) :
-              
+
               <Row><Text style={{width: '100%', textAlign: 'center'}}>
-                Não existem notícias para serem exibidas.
+                {loading ? 'Carregando...' : 'Não existem notícias para serem exibidas.'}
               </Text></Row>
             }
   

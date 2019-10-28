@@ -32,6 +32,15 @@ export const Card = styled.div`
   width: 50%;
   display: flex;
   flex-direction: column;
+
+  @media(max-width: 1144px) {
+    width: 75%;
+  }
+
+  @media(max-width: 768px) {
+    width: calc(100% - 174px);
+    margin: 16px;
+  }
 `
 
 export const Button = styled.button`
@@ -82,6 +91,10 @@ export const Divider = styled.div`
 export const Row = styled.div`
   display: flex;
   align-items: center;
+
+  @media(max-width: 768px) {
+    flex-direction: column;
+  }
 
   ${props =>
     props.fluid &&
