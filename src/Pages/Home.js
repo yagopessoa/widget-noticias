@@ -47,7 +47,7 @@ class Home extends React.Component {
     
     return newsList.map((newsItem, index) => 
       <div key={index}>
-        <a href={newsItem.link} target='_blank' style={{textDecoration: 'none'}}>
+        <a href={newsItem.link} target='_blank' rel='noopener noreferrer' style={{textDecoration: 'none'}}>
           <Subtitle>{ newsItem.title }</Subtitle>
         </a>
     
@@ -108,7 +108,7 @@ class Home extends React.Component {
             
           </Card>
 
-          <Text caption>Powered by <a href='http://newsapi.org' target='_blank'>News API</a>.</Text>
+          <Text caption>Powered by <a href='http://newsapi.org' target='_blank' rel='noopener noreferrer'>News API</a>.</Text>
   
         </header>
       </div>
