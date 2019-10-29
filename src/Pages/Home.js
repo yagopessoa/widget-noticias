@@ -44,8 +44,6 @@ class Home extends React.Component {
     
     if (selected === '') newsList = news
     else newsList = news.filter(item => item.source === selected)
-
-    console.log(newsList)
     
     return newsList.map((newsItem, index) => 
       <div key={index}>
