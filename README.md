@@ -4,7 +4,7 @@ A simple web app that fetches daily news, using the [News API](http://newsapi.or
 
 ## Hosted at
 
-widget-noticias.netlify.com
+### [widget-noticias.netlify.com](widget-noticias.netlify.com)
 
 ## Environment variable
 
