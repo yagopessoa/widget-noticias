@@ -24,7 +24,7 @@ class Home extends React.Component {
     
     store.subscribe(() => {
       
-      const { items, isFetching, hasMoreToFetch} = store.getState()
+      const { items, isFetching, hasMoreToFetch } = store.getState()
 
       this.setState({
         news: items,

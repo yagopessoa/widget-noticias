@@ -1,16 +1,15 @@
 
-import fetch from 'cross-fetch'
 import store from './store'
 
 export const REQUEST_NEWS = 'REQUEST_NEWS'
-function requestNews () {
+export function requestNews () {
   return {
     type: REQUEST_NEWS
   }
 }
 
 export const RECEIVE_NEWS = 'RECEIVE_NEWS'
-function receiveNews (json) {
+export function receiveNews (json) {
   return {
     type: RECEIVE_NEWS,
     news: json.articles && json.articles.map(article => ({
@@ -39,7 +38,7 @@ export function fetchNews () {
 
 }
 
-const formattedDate = date => `${date.getDate().toString().padStart(2, '0')}/` +
+export const formattedDate = date => `${date.getDate().toString().padStart(2, '0')}/` +
   `${(date.getMonth()+1).toString().padStart(2, '0')}/` +
   `${date.getFullYear()}`
 
