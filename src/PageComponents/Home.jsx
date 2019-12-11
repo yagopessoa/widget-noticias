@@ -1,12 +1,16 @@
 import React from 'react';
 import '../App.css';
+import { Provider } from 'react-redux';
 import { Text } from '../Components/baseComponents';
 import Card from './Card';
+import store from '../Redux/store';
 
 const Home = () => (
   <div>
     <header className="App">
-      <Card title="Notícias" />
+      <Provider store={store}>
+        <Card title="Notícias" />
+      </Provider>
       <Text caption>
         Powered by
         {' '}

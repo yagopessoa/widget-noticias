@@ -1,29 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Select from '../Components/select';
 import { Title, Text, Button, Card, Row } from '../Components/baseComponents';
 import NewsList from './NewsList';
-import store from '../Redux/store';
 import { fetchNews } from '../Redux/actions';
 
 const CardComponent = props => {
   const [selected, setSelected] = useState('');
-  const [news, setNews] = useState([]);
-  const [hasMore, setHasMore] = useState(false);
-  const [loading, setLoading] = useState(false);
+
+  const { title, isFetching, hasMoreToFetch, items, fetchMoreNews } = props;
 
   useEffect(() => {
-    store.subscribe(() => {
-      const { items, isFetching, hasMoreToFetch } = store.getState();
-
-      setNews(items);
-      setHasMore(hasMoreToFetch);
-      setLoading(isFetching);
-    });
-
-    store.dispatch(fetchNews());
-  }, []);
+    fetchMoreNews();
+  }, [fetchMoreNews]);
 
   const sourcesList = newsItems => [
     ...new Set(newsItems.map(item => item.source))
@@ -33,8 +24,6 @@ const CardComponent = props => {
     if (e.detail === 0) setSelected(e.target.value);
   };
 
-  const { title } = props;
-
   return (
     <Card>
       <Row fluid style={{ marginBottom: 48 }}>
@@ -42,7 +31,7 @@ const CardComponent = props => {
 
         <Select name="sourceFilter" onClick={handleFilterOption}>
           <option value="">Filtrar por fonte</option>
-          {sourcesList(news).map(source => (
+          {sourcesList(items).map(source => (
             <option key={source} value={source}>
               {source}
             </option>
@@ -50,12 +39,12 @@ const CardComponent = props => {
         </Select>
       </Row>
 
-      {news.length > 0 ? (
-        NewsList(news, selected)
+      {items.length > 0 ? (
+        NewsList(items, selected)
       ) : (
         <Row>
           <Text style={{ width: '100%', textAlign: 'center' }}>
-            {loading
+            {isFetching
               ? 'Carregando...'
               : 'Não existem notícias para serem exibidas.'}
           </Text>
@@ -64,8 +53,8 @@ const CardComponent = props => {
 
       <Button
         style={{ marginTop: 48 }}
-        disabled={!hasMore || loading}
-        onClick={() => store.dispatch(fetchNews())}
+        disabled={!hasMoreToFetch || isFetching}
+        onClick={() => fetchMoreNews()}
       >
         Mostrar mais
       </Button>
@@ -74,7 +63,21 @@ const CardComponent = props => {
 };
 
 CardComponent.propTypes = {
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  hasMoreToFetch: PropTypes.bool.isRequired,
+  items: PropTypes.arrayOf(PropTypes.any).isRequired,
+  fetchMoreNews: PropTypes.func.isRequired
 };
 
-export default CardComponent;
+const mapStateToProps = news => ({
+  isFetching: news.isFetching,
+  hasMoreToFetch: news.hasMoreToFetch,
+  items: news.items
+});
+
+const mapDispatchToProps = {
+  fetchMoreNews: fetchNews
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CardComponent);

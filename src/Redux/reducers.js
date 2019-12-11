@@ -1,4 +1,4 @@
-import { REQUEST_NEWS, RECEIVE_NEWS } from './actions';
+import { REQUEST_NEWS, RECEIVE_NEWS, SET_NO_MORE_TO_FETCH } from './actions';
 
 function news(
   state = {
@@ -22,10 +22,14 @@ function news(
       return {
         ...state,
         isFetching: false,
-        hasMoreToFetch: news.length % 5 === 0 && incNews.length !== 0,
         items: newsItems
       };
     }
+    case SET_NO_MORE_TO_FETCH:
+      return {
+        ...state,
+        hasMoreToFetch: false
+      };
     default:
       return state;
   }
