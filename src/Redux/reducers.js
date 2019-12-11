@@ -1,40 +1,38 @@
-import {
-  REQUEST_NEWS,
-  RECEIVE_NEWS
-} from './actions'
+import { REQUEST_NEWS, RECEIVE_NEWS } from './actions'
 
-function news (
+function news(
   state = {
     isFetching: false,
     hasMoreToFetch: true,
-    items: []
+    items: [],
   },
-  action
+  action,
 ) {
   switch (action.type) {
     case REQUEST_NEWS:
-      return Object.assign({}, state, {
-        isFetching: true
-      })
-    case RECEIVE_NEWS:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case RECEIVE_NEWS: {
+      const incNews = action.news ? action.news : [];
 
-      let incNews = action.news ? action.news : []
-
-      let news = [
+      const newsItems = [
         ...state.items,
-        ...incNews
-      ]
+        ...incNews,
+      ];
 
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
-        hasMoreToFetch: 
-          (news.length % 5 !== 0 ? false : true)
+        hasMoreToFetch: (news.length % 5 === 0)
           && incNews.length !== 0,
-        items: news
-      })
+        items: newsItems,
+      };
+    }
     default:
-      return state
+      return state;
   }
 }
 
-export default news
+export default news;

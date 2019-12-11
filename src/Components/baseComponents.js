@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 
 export const Title = styled.p`
   font: 600 32px/38px Roboto;
@@ -8,14 +8,14 @@ export const Title = styled.p`
   border-radius: 4px;
   width: fit-content;
   margin: 8px 2px;
-`
+`;
 
 export const Subtitle = styled.div`
   font: 600 24px/29px Roboto;
   color: #4E4E4E;
   width: fit-content;
   margin: 16px 2px;
-`
+`;
 
 export const Text = styled.div`
   font: 400 20px/24px Roboto;
@@ -23,12 +23,11 @@ export const Text = styled.div`
   width: fit-content;
   margin: 8px 2px;
 
-  ${props =>
-    props.caption &&
-    css`
+  ${(props) => props.caption
+    && css`
       font-size: 12px;
     `};
-`
+`;
 
 export const Card = styled.div`
   background: #FFFFFF;
@@ -47,7 +46,7 @@ export const Card = styled.div`
     width: calc(100% - 174px);
     margin: 16px;
   }
-`
+`;
 
 export const Button = styled.button`
   padding: 8px 16px;
@@ -67,13 +66,12 @@ export const Button = styled.button`
     background: #4FBBFF;
   }
 
-  ${props =>
-    props.disabled &&
-    css`
+  ${(props) => props.disabled
+    && css`
       cursor: auto;
       background-color: #D8D8E4;
     `};
-`
+`;
 
 export const Label = styled.div`
   font: 400 20px/24px Roboto;
@@ -83,7 +81,7 @@ export const Label = styled.div`
   border-radius: 4px;
   color: #FFF;
   width: fit-content;
-`
+`;
 
 export const Divider = styled.div`
   height: 0px;
@@ -92,7 +90,7 @@ export const Divider = styled.div`
   border: 1px solid #A4A4A4;
   border-radius: 4px;
   margin: 16px 0px;
-`
+`;
 
 export const Row = styled.div`
   display: flex;
@@ -102,10 +100,9 @@ export const Row = styled.div`
     flex-direction: column;
   }
 
-  ${props =>
-    props.fluid &&
-    css`
+  ${(props) => props.fluid
+    && css`
       width: 100%;
       justify-content: space-between;
     `};
-`
+`;
