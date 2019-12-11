@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import Select from '../Components/select';
 import {
   Title,
-  Subtitle,
   Text,
   Button,
-  Label,
   Card,
-  Divider,
   Row,
 } from '../Components/baseComponents';
+import NewsList from './NewsList';
 import store from '../Redux/store';
 import { fetchNews } from '../Redux/actions';
 
@@ -31,33 +29,6 @@ const CardComponent = (props) => {
 
     store.dispatch(fetchNews());
   }, []);
-
-  const renderList = (newsItems, selectedNews) => {
-    let newsList;
-
-    if (selectedNews === '') newsList = newsItems;
-    else newsList = newsItems.filter((item) => item.source === selectedNews);
-
-    return newsList.map((newsItem) => (
-      <div key={newsItem.title}>
-        <a
-          href={newsItem.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ textDecoration: 'none' }}
-        >
-          <Subtitle>{newsItem.title}</Subtitle>
-        </a>
-
-        <Row>
-          <Text>{newsItem.date}</Text>
-          <Label>{newsItem.source}</Label>
-        </Row>
-
-        <Divider />
-      </div>
-    ));
-  };
 
   const sourcesList = (newsItems) => [...new Set(newsItems.map((item) => item.source))];
 
@@ -83,7 +54,7 @@ const CardComponent = (props) => {
       </Row>
 
       {news.length > 0 ? (
-        renderList(news, selected)
+        NewsList(news, selected)
       ) : (
         <Row>
           <Text style={{ width: '100%', textAlign: 'center' }}>
