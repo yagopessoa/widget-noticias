@@ -12,8 +12,8 @@ const Home = () => (
         <Card title="Notícias" />
       </Provider>
       <Text caption>
-        Powered by
-        {' '}
+        {`Powered by`}
+        {` `}
         <a href="http://newsapi.org" target="_blank" rel="noopener noreferrer">
           News API
         </a>
