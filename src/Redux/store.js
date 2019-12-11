@@ -9,9 +9,9 @@ import news from './reducers';
 const store = createStore(
   news,
   applyMiddleware(
-    thunkMiddleware,
+    thunkMiddleware
     // loggerMiddleware
-  ),
+  )
 );
 
 export default store;

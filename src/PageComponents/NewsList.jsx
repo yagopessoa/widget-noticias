@@ -4,16 +4,16 @@ import {
   Text,
   Label,
   Divider,
-  Row,
+  Row
 } from '../Components/baseComponents';
 
 const List = (newsItems, selectedNews) => {
   let newsList;
 
   if (selectedNews === '') newsList = newsItems;
-  else newsList = newsItems.filter((item) => item.source === selectedNews);
+  else newsList = newsItems.filter(item => item.source === selectedNews);
 
-  return newsList.map((newsItem) => (
+  return newsList.map(newsItem => (
     <div key={newsItem.title}>
       <a
         href={newsItem.link}
