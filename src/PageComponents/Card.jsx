@@ -7,7 +7,7 @@ import { Title, Text, Button, Card, Row } from '../Components/baseComponents';
 import NewsList from './NewsList';
 import { fetchNews } from '../Redux/actions';
 
-const CardComponent = props => {
+export const CardComponent = props => {
   const [selected, setSelected] = useState('');
 
   const { title, isFetching, hasMoreToFetch, items, fetchMoreNews } = props;
