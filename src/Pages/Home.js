@@ -1,119 +1,37 @@
-import React from 'react'
-import '../App.css'
-
-import Select from '../Components/select'
-import { 
-  Title, Subtitle, Text,
-  Button, Label, Card,
-  Divider, Row 
-} from '../Components/baseComponents'
-
-import store from '../Redux/store'
-import { fetchNews } from '../Redux/actions'
+import React from "react";
+import "../App.css";
+import { Text } from "../Components/baseComponents";
+import Card from "./Card";
 
 class Home extends React.Component {
-
   state = {
-    selected: '',
+    selected: "",
     news: [],
     hasMoreToFetch: false,
     loading: true
-  }
+  };
 
-  componentDidMount () {
-    
-    store.subscribe(() => {
-      
-      const { items, isFetching, hasMoreToFetch } = store.getState()
-
-      this.setState({
-        news: items,
-        hasMoreToFetch: hasMoreToFetch,
-        loading: isFetching
-      })
-      
-    })
-
-    store.dispatch(fetchNews())
-
-  }
-
-  renderList = (news, selected) => {
-    
-    let newsList
-    
-    if (selected === '') newsList = news
-    else newsList = news.filter(item => item.source === selected)
-    
-    return newsList.map((newsItem, index) => 
-      <div key={index}>
-        <a href={newsItem.link} target='_blank' rel='noopener noreferrer' style={{textDecoration: 'none'}}>
-          <Subtitle>{ newsItem.title }</Subtitle>
-        </a>
-    
-        <Row>
-          <Text>{ newsItem.date }</Text>
-          <Label>{ newsItem.source }</Label>
-        </Row>
-    
-        <Divider />
-      </div>)
-  }
-
-  sourcesList = (news) => [...new Set(news.map(item => item.source))]
-
-  handleFilterOption = (e) => { if (e.detail === 0) this.setState({ selected: e.target.value }) }
-
-  render () {
-
-    const { selected, news, hasMoreToFetch, loading } = this.state
-
+  render() {
     return (
       <div>
-        <header className='App'>
-          
-          <Card>
-  
-            <Row 
-              fluid 
-              style={{ marginBottom: 48 }}
-            >
-              <Title>Notícias</Title>
-  
-              <Select name='sourceFilter' onClick={this.handleFilterOption}>
-                <option value=''>Filtrar por fonte</option>
-                {this.sourcesList(news).map((source, index) => 
-                  <option key={index} value={source}>
-                    { source }
-                  </option>)
-                }
-              </Select>
-            </Row>
-  
-            { 
-              news.length > 0 ? this.renderList(news, selected) :
+        <header className="App">
+          <Card title={"Notícias"} />
 
-              <Row><Text style={{width: '100%', textAlign: 'center'}}>
-                {loading ? 'Carregando...' : 'Não existem notícias para serem exibidas.'}
-              </Text></Row>
-            }
-  
-            <Button
-              style={{ marginTop: 48 }}
-              disabled={ !hasMoreToFetch || loading }
-              onClick={ () => store.dispatch(fetchNews()) }
+          <Text caption>
+            Powered by{" "}
+            <a
+              href="http://newsapi.org"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Mostrar mais
-            </Button>
-            
-          </Card>
-
-          <Text caption>Powered by <a href='http://newsapi.org' target='_blank' rel='noopener noreferrer'>News API</a>.</Text>
-  
+              News API
+            </a>
+            .
+          </Text>
         </header>
       </div>
-    )
+    );
   }
 }
 
-export default Home
+export default Home;
