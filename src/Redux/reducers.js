@@ -1,9 +1,6 @@
-import {
-  REQUEST_NEWS,
-  RECEIVE_NEWS
-} from './actions'
+import { REQUEST_NEWS, RECEIVE_NEWS, SET_NO_MORE_TO_FETCH } from './actions';
 
-function news (
+function news(
   state = {
     isFetching: false,
     hasMoreToFetch: true,
@@ -13,28 +10,29 @@ function news (
 ) {
   switch (action.type) {
     case REQUEST_NEWS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true
-      })
-    case RECEIVE_NEWS:
+      };
+    case RECEIVE_NEWS: {
+      const incNews = action.news ? action.news : [];
 
-      let incNews = action.news ? action.news : []
+      const newsItems = [...state.items, ...incNews];
 
-      let news = [
-        ...state.items,
-        ...incNews
-      ]
-
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
-        hasMoreToFetch: 
-          (news.length % 5 !== 0 ? false : true)
-          && incNews.length !== 0,
-        items: news
-      })
+        items: newsItems
+      };
+    }
+    case SET_NO_MORE_TO_FETCH:
+      return {
+        ...state,
+        hasMoreToFetch: false
+      };
     default:
-      return state
+      return state;
   }
 }
 
-export default news
+export default news;
